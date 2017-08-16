@@ -7,10 +7,10 @@ services:
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - "9200"
+      - "9300"
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ES_JAVA_OPTS: "-Xmx1024m -Xms512m"
     networks:
       - elk
 
@@ -22,9 +22,12 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
+      - "5002:5002"
+      - "5003:5003"
+      - "5044:5044"
       - "5000:5000/udp"
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
     networks:
       - elk
     depends_on:
@@ -61,7 +64,7 @@ services:
       driver: gelf
       options:
         gelf-address: "udp://127.0.0.1:5000"
-        tag: "nginx"
+        tag: "flask"
 networks:
 
   elk:
